@@ -5,6 +5,7 @@ import {
     getAuth,
     onAuthStateChanged,
     signInWithEmailAndPassword,
+    signInWithPopup,
     signOut,
     updateProfile
 } from "firebase/auth"
@@ -37,6 +38,18 @@ const AuthProvider = ({ children }) => {
         return signOut(auth)
     }
 
+    const googleSignIn = (provider) => {
+        return signInWithPopup(auth, provider)
+    }
+
+    const microsoftSignIn = (provider) => {
+        return signInWithPopup(auth, provider)
+    }
+
+    const facebookSignIn = (provider) => {
+        return signInWithPopup(auth, provider)
+    }
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             console.log("user updated", currentUser);
@@ -52,7 +65,10 @@ const AuthProvider = ({ children }) => {
         login,
         registration,
         logOut,
-        updateUser
+        updateUser,
+        googleSignIn,
+        microsoftSignIn,
+        facebookSignIn
     };
 
     return (
