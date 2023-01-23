@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../Contexts/AuthProvider';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import "./Login.css"
@@ -9,17 +9,23 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [generalError, setGeneralError] = useState("");
     const { login } = useContext(AuthContext)
+    const navigate = useNavigate();
+
+
 
     const handleLogin = async data => {
         console.log(login)
         try {
             const res = await login(data.email, data.password);
             setGeneralError("");
+            navigate("/");
         } catch (error) {
             setGeneralError(error.message)
             console.log(error)
         }
     }
+
+
     return (
         <div className='loginContainer'>
             <div className='login-card'>
@@ -67,7 +73,11 @@ const Login = () => {
                     generalError && <span className='text-danger'>{generalError}</span>
                 }
                 <h5 className='text-center'>Or</h5>
-                <SocialLogin />
+
+                <SocialLogin
+                    setGeneralError={setGeneralError}
+                />
+
                 <p className='mt-1 text-center'>New Here? <Link to="/user/register" className='text-decoration-none'><span>Sign Up Now</span></Link></p>
             </div>
         </div>

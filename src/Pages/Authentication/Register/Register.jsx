@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAddUserMutation } from '../../../app/users/userSlice';
 import { AuthContext } from '../../../Contexts/AuthProvider';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import "./Register.css"
@@ -9,14 +10,18 @@ const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { registration, updateUser } = useContext(AuthContext)
     const [generalError, setGeneralError] = useState("");
-
+    const [addUser] = useAddUserMutation();
+    const navigate = useNavigate();
     const handleRegister = async data => {
         // console.log(data)
+        const user = { name: data.name, email: data.email, role: "user" }
         try {
             const res = await registration(data.email, data.password);
             const response = await updateUser(data.name);
-            console.log(res.user)
+            addUser(user);
+
             setGeneralError("");
+            navigate("/");
         } catch (error) {
             setGeneralError(error.message)
         }
@@ -26,7 +31,12 @@ const Register = () => {
         <div className='loginContainer'>
             <div className='login-card'>
                 <h4 className='text-center mb-2'>Register With</h4>
-                <SocialLogin />
+
+                <SocialLogin
+                    setGeneralError={setGeneralError}
+                />
+
+
                 <h5 className='text-center'>Or</h5>
                 <form onSubmit={handleSubmit(handleRegister)}>
                     <input
