@@ -3,10 +3,10 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useGetAdminQuery } from "../app/verifyUser/verifyAdmin";
 import { AuthContext } from "../Contexts/AuthProvider";
 
-const AdminRoute = ({ children }) => {
+const ManagerRoute = ({ children }) => {
     const { user, loading, logOut } = useContext(AuthContext);
 
-    const { data: admin, isLoading } = useGetAdminQuery(user?.email);
+    const { data: manager, isLoading } = useGetAdminQuery(user?.email);
 
     const location = useLocation();
 
@@ -14,9 +14,9 @@ const AdminRoute = ({ children }) => {
         return <p>Loading...</p>
     }
 
-    console.log(admin)
+    // console.log(manager)
 
-    if (user?.uid && admin) {
+    if (user?.uid && manager) {
         return children;
     }
 
@@ -27,4 +27,4 @@ const AdminRoute = ({ children }) => {
     }
 }
 
-export default AdminRoute;
+export default ManagerRoute;

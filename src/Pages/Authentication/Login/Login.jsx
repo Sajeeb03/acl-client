@@ -14,7 +14,7 @@ const Login = () => {
 
 
     const handleLogin = async data => {
-        console.log(login)
+        // console.log(login)
         try {
             const res = await login(data.email, data.password);
             setGeneralError("");

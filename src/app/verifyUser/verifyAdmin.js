@@ -7,7 +7,6 @@ export const verifyAdminSlice = apiSlice.injectEndpoints({
         getAdmin: builder.query({
             query: (email) => `/users?email=${email}`,
             transformResponse: response => {
-                console.log(response)
                 return response;
             }
         })

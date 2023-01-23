@@ -7,7 +7,6 @@ export const verifyManagerSlice = apiSlice.injectEndpoints({
         getManager: builder.query({
             query: (email) => `/users/${email}`,
             transformResponse: response => {
-                console.log(response)
                 return response;
             }
         })
