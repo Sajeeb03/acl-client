@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useGetAdminQuery } from "../app/verifyUser/verifyAdmin";
+import Loader from "../components/Loader/Loader";
 import { AuthContext } from "../Contexts/AuthProvider";
 
 const AdminRoute = ({ children }) => {
@@ -11,10 +12,10 @@ const AdminRoute = ({ children }) => {
     const location = useLocation();
 
     if (loading || isLoading) {
-        return <p>Loading...</p>
+        return <Loader />
     }
 
-    console.log(admin)
+    // console.log(admin)
 
     if (user?.uid && admin) {
         return children;

@@ -5,7 +5,7 @@ import Header from '../../Shared/Header/Header'
 const AuthLayout = () => {
     return (
         <>
-            <Header />
+            <Header></Header>
             <Outlet />
         </>
     )

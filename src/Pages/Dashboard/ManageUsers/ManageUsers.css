@@ -1,0 +1,23 @@
+.manage {
+    background-color: white;
+    border-radius: 8px;
+    margin-top: 20px;
+    padding: 20px;
+    box-shadow: 3px 3px 10px;
+}
+
+.adminBtn {
+    border: none;
+    background-color: #063970;
+    font-size: x-small;
+    font-weight: 800;
+    border-radius: 4px;
+}
+
+.managerBtn {
+    border: none;
+    background-color: #e28743;
+    font-size: x-small;
+    font-weight: 800;
+    border-radius: 4px;
+}

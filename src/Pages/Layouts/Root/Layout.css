@@ -1,0 +1,60 @@
+.drawer a {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+}
+
+
+.layout {
+    background-color: #eff1f3;
+}
+
+
+
+.hide,
+.show {
+    background-color: white;
+    border-radius: 8px;
+    margin-top: 20px;
+    padding: 20px;
+    min-height: 88vh;
+    width: 250px;
+    box-shadow: 3px 3px 10px;
+}
+
+
+
+
+
+@media screen and (max-width: 768px) {
+    @keyframes drawerOpen {
+        from {
+            transform: translateX(-500px);
+        }
+
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    .drawer {
+        position: absolute;
+    }
+
+    .show {
+        animation-name: drawerOpen;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in;
+        background-color: white;
+        border-radius: 8px;
+        margin-top: 20px;
+        padding: 20px;
+        min-height: 90vh;
+        width: 250px;
+        box-shadow: 3px 3px 10px;
+    }
+
+    .hide {
+        transform: translateX(-500px);
+    }
+}

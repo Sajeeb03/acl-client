@@ -10,7 +10,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../../Contexts/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ children }) => {
     const { user, logOut } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -22,15 +22,15 @@ const Header = () => {
 
     return (
         <>
-            <Navbar bg="primary" variant="dark">
+            <Navbar bg="primary" variant="dark" className="navbar">
                 <Container>
-                    <Navbar.Brand href="#home">Navbar</Navbar.Brand>
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#features">Features</Nav.Link>
-                        <Nav.Link href="#pricing">Pricing</Nav.Link>
+                        <Link to="/" className="text-white text-decoration-none fw-bold">Dashboard</Link>
                     </Nav>
                     <Nav className="justify-content-end">
+                        {
+                            children && <button className="d-md-none" onClick={() => children[1](!children[0])}> Drawer</button>
+                        }
                         <Nav.Item>
                             <p className="m-0 d-flex align-items-center gap-2 text-white fw-bold"><FaUserAlt /> <span>{
                                 user?.uid ? <span onClick={handleSignOut}>Sign Out</span> : <Link to="/user/login" className="text-white text-decoration-none"><span>SIgn In</span></Link>
