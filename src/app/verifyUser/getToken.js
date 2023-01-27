@@ -3,14 +3,17 @@ import { apiSlice } from "../api/apiSlice";
 
 export const getToken = apiSlice.injectEndpoints({
     endpoints: builder => ({
-        getJwtToken: builder.query({
-            query: (email) => `/jwt?email=${email}`,
-            transformResponse: response => {
-                return response.data;
-            }
+        setJwtToken: builder.mutation({
+            query: (email) => ({
+                url: `/jwt?email=${email}`,
+                method: "POST",
+                transformResponse: response => {
+                    return response.data;
+                }
+            })
         })
     })
 });
 
 
-export const { useGetJwtTokenQuery } = getToken;
+export const { useSetJwtTokenMutation } = getToken;
