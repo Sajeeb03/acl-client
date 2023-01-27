@@ -1,15 +1,27 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import { useGetJwtTokenQuery } from '../../../app/verifyUser/getToken';
 import { AuthContext } from '../../../Contexts/AuthProvider';
+
 import SocialLogin from '../SocialLogin/SocialLogin';
 import "./Login.css"
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [generalError, setGeneralError] = useState("");
-    const { login } = useContext(AuthContext)
+    const [email, setEmail] = useState("")
+    const { login } = useContext(AuthContext);
     const navigate = useNavigate();
+
+
+    const result = (name) => useGetJwtTokenQuery(
+        name
+    )
+
+    console.log(result) 
+
+
 
 
 
@@ -18,10 +30,12 @@ const Login = () => {
         try {
             const res = await login(data.email, data.password);
             setGeneralError("");
+            setEmail(data.email)
             navigate("/");
         } catch (error) {
             setGeneralError(error.message)
-            console.log(error)
+            console.log(error);
+            setEmail("")
         }
     }
 

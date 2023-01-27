@@ -6,13 +6,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AuthProvider from './Contexts/AuthProvider';
 import { Provider } from 'react-redux';
 import { store } from './app/store/store';
+import { CookiesProvider } from 'react-cookie';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthProvider>
       <Provider store={store}>
-      <App />
+        <CookiesProvider>
+          <App />
+        </CookiesProvider>
       </Provider>
     </AuthProvider>
   </React.StrictMode>,

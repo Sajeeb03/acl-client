@@ -13,17 +13,19 @@ export const usersSlice = apiSlice.injectEndpoints({
         }),
 
         addUser: builder.mutation({
+
             query: (user) => ({
                 url: `/users?email=${user.email}`,
                 method: "POST",
                 body: user
             }),
             invalidatesTags: ['Users']
+
         }),
 
         updateUser: builder.mutation({
             query: (user) => ({
-                url: `/users/${user._id}`,
+                url: `/users/${user.id}`,
                 method: "PUT",
                 body: user,
                 transformResponse: response => {
@@ -31,9 +33,11 @@ export const usersSlice = apiSlice.injectEndpoints({
                 }
             }),
             invalidatesTags: ['Users']
+
         }),
 
         deleteUser: builder.mutation({
+
             query: (user) => ({
                 url: "/users",
                 method: "DELETE",
@@ -41,7 +45,10 @@ export const usersSlice = apiSlice.injectEndpoints({
                 transformResponse: response => {
                     return response;
                 }
-            })
+            }),
+
+            invalidatesTags: ['Users']
+
         })
     })
 })
@@ -49,8 +56,10 @@ export const usersSlice = apiSlice.injectEndpoints({
 
 
 export const {
+
     useGetUsersQuery,
     useAddUserMutation,
     useUpdateUserMutation,
     useDeleteUserMutation
+
 } = usersSlice;
