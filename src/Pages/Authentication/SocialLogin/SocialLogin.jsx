@@ -9,7 +9,7 @@ import ms from "../../../assets/icons/ms.png"
 
 import { AuthContext } from '../../../Contexts/AuthProvider'
 import { FacebookAuthProvider, GoogleAuthProvider, OAuthProvider } from 'firebase/auth'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { baseURL } from '../../../assets/baseUrl'
 import useJwtToken from '../../../Hooks/useToken'
@@ -31,6 +31,8 @@ const SocialLogin = ({ setGeneralError }) => {
 
     //use this function to navigate to certain page
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || "/";
 
     const handleGoogleSignIn = async () => {
         try {
@@ -96,7 +98,7 @@ const SocialLogin = ({ setGeneralError }) => {
 
     if (token) {
         cookies.set("accessToken", token, { path: "/" })
-        navigate("/");
+        navigate(from, { replace: true });
     }
 
 

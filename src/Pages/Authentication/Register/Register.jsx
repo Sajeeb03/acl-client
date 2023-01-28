@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { baseURL } from '../../../assets/baseUrl';
 import { AuthContext } from '../../../Contexts/AuthProvider';
@@ -16,13 +16,16 @@ const Register = () => {
     const [userEmail, setUserEmail] = useState("");
 
     const [token] = useJwtToken(userEmail);
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || "/";
+
     const navigate = useNavigate();
     const cookies = new Cookies();
 
 
     if (token) {
         cookies.set('accessToken', token, { path: "/" })
-        navigate("/");
+        navigate(from, { replace: true });
     }
 
     const handleRegister = async data => {

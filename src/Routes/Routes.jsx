@@ -5,8 +5,8 @@ import Home from "../Pages/Dashboard/Home/Home";
 import ManageUsers from "../Pages/Dashboard/ManageUsers/ManageUsers";
 import AuthLayout from "../Pages/Layouts/AuthLayout/AuthLayout";
 import Layout from "../Pages/Layouts/Root/Layout";
-import AdminRoute from "./AdminRoute";
-import ManagerRoute from "./ManagerRoute";
+import PrivateRoute from "./PrivateRoute";
+
 
 const router = createBrowserRouter([
     {
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/manage",
-                element: <ManageUsers />
+                element: <PrivateRoute><ManageUsers /></PrivateRoute>
             }
         ]
     },
