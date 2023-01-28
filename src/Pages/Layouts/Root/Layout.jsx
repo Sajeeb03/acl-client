@@ -26,9 +26,7 @@ const Layout = () => {
                             <Link to="/"><p>Home</p></Link>
                             <Link to="/user/login"><p>Sign In</p></Link>
                             <Link to="/user/register"><p>Sign Up</p></Link>
-                            {
-                                admin && <Link to="/manage"><p>Manage User</p></Link>
-                            }
+                            <Link to="/manage"><p>Manage User</p></Link>
                         </div>
                     </Col>
                     <Col>

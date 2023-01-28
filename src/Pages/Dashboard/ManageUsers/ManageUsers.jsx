@@ -1,33 +1,64 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { FaTrash } from 'react-icons/fa'
-import { useAddUserMutation, useDeleteUserMutation, useGetUsersQuery, useUpdateUserMutation } from "../../../app/users/userSlice"
-import Loader from '../../../components/Loader/Loader'
+
 import "./ManageUsers.css"
+import axios from 'axios'
+import { baseURL } from '../../../assets/baseUrl'
+
 
 const ManageUsers = () => {
+    const [users, setUsers] = useState([]);
+    const [refetch, setRefech] = useState(false);
 
-    const { data: users, isLoading, isSuccess, isError, error } = useGetUsersQuery();
+    useEffect(() => {
+        axios(`${baseURL}/users`)
+            .then(res => {
+                setUsers(res.data.data);
+                setRefech(false);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }, [refetch])
 
-    const [updateUser] = useUpdateUserMutation();
-    const [deleteUser] = useDeleteUserMutation();
-
+//updating the role of the user
     const handleAdminUpdate = async user => {
-        updateUser({ id: user._id, role: "admin" })
+        const updateData = { role: "admin" }
+        try {
+            const res = await axios.put(`${baseURL}/users/${user._id}`, updateData)
+            setRefech(true);
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const handleManagerUpdate = async user => {
-        updateUser({ id: user._id, role: "manager" })
+        const updateData = { role: "manager" }
+        try {
+            const res = await axios.put(`${baseURL}/users/${user._id}`, updateData)
+            setRefech(true);
+        } catch (error) {
+            console.log(error)
+        }
     }
 
-    let content;
-
-    if (isLoading) {
-        return <Loader />
+    //deleting the user
+    const handleDelete = async user => {
+        try {
+            const res = await axios.delete(`${baseURL}/user/${user._id}`)
+            setRefech(true);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    else if (isSuccess) {
-        content = users.map((user, i) => <tr key={user._id}>
+
+
+
+
+    let content = users?.map((user, i) =>
+        <tr key={user._id}>
             <td>{i + 1}</td>
             <td>{user.name}</td>
             <td>{user.email}</td>
@@ -35,15 +66,13 @@ const ManageUsers = () => {
                 <div className='d-flex align-items-center justify-content-around gap-1'>
                     <button onClick={() => handleAdminUpdate(user)} disabled={user.role === "admin"} className="adminBtn">Make Admin</button>
                     <button onClick={() => handleManagerUpdate(user)} disabled={user.role === "manager"} className="managerBtn">Make Manager</button>
-                    <FaTrash onClick={() => deleteUser(user)} className='icon text-danger' title="Delete user" />
+                    <FaTrash onClick={() => handleDelete(user)} className='icon text-danger' title="Delete user" />
                 </div>
             </td>
         </tr>)
-    }
 
-    else if (isError) {
-        content = <p>{error}</p>;
-    }
+
+
 
     return (
         <div className='manage'>
