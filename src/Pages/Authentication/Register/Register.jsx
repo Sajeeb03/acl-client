@@ -2,19 +2,29 @@ import axios from 'axios';
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import { baseURL } from '../../../assets/baseUrl';
 import { AuthContext } from '../../../Contexts/AuthProvider';
+import useJwtToken from '../../../Hooks/useToken';
 import SocialLogin from '../SocialLogin/SocialLogin';
-import "./Register.css"
+
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { registration, updateUser } = useContext(AuthContext)
     const [generalError, setGeneralError] = useState("");
+    const [userEmail, setUserEmail] = useState("");
 
-
-
+    const [token] = useJwtToken(userEmail);
     const navigate = useNavigate();
+    const cookies = new Cookies();
+
+
+    if (token) {
+        cookies.set('accessToken', token, { path: "/" })
+        navigate("/");
+    }
+
     const handleRegister = async data => {
         // console.log(data)
         const user = { name: data.name, email: data.email, role: "user" }
@@ -22,11 +32,12 @@ const Register = () => {
             const res = await registration(data.email, data.password);
             const response = await updateUser(data.name);
             addUser(user);
-
+            setUserEmail(data.email)
             setGeneralError("");
-            navigate("/");
+
         } catch (error) {
-            setGeneralError(error.message)
+            setGeneralError(error.message);
+            setUserEmail("");
         }
     }
 

@@ -1,28 +1,29 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from 'universal-cookie';
-import { useSetJwtTokenMutation } from "../../../app/verifyUser/getToken"
+
 import { AuthContext } from '../../../Contexts/AuthProvider';
+import useJwtToken from '../../../Hooks/useToken';
+import Cookies from 'universal-cookie';
 
 import SocialLogin from '../SocialLogin/SocialLogin';
 import "./Login.css"
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [generalError, setGeneralError] = useState("");
-
     const { login } = useContext(AuthContext);
+
     const navigate = useNavigate();
-
-    const [setJwtToken] = useSetJwtTokenMutation();
     const cookies = new Cookies();
+    const [generalError, setGeneralError] = useState("");
+    const [userEmail, setUserEmail] = useState("");
 
+    const [token] = useJwtToken(userEmail);
 
-    const handleToken = async email => {
-        const token = await setJwtToken(email)
-        const jwtoken = token.data.data;
-        cookies.set("accessToken", jwtoken, { path: "/" })
+    if (token) {
+        // console.log(token)
+        cookies.set('accessToken', token, { path: "/" })
+        navigate('/')
     }
 
 
@@ -31,10 +32,11 @@ const Login = () => {
         try {
             const res = await login(data.email, data.password);
             setGeneralError("");
-            handleToken(data.email)
-            navigate("/");
+            setUserEmail(data.email);
+
         } catch (error) {
-            setGeneralError(error.message)
+            setGeneralError(error.message);
+            setUserEmail("");
             console.log(error);
         }
     }

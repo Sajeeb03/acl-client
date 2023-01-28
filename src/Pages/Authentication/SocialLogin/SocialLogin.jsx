@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import "./SocialLogin.css"
 
 //icos
@@ -12,6 +12,8 @@ import { FacebookAuthProvider, GoogleAuthProvider, OAuthProvider } from 'firebas
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { baseURL } from '../../../assets/baseUrl'
+import useJwtToken from '../../../Hooks/useToken'
+import Cookies from 'universal-cookie'
 
 
 
@@ -19,6 +21,7 @@ import { baseURL } from '../../../assets/baseUrl'
 const SocialLogin = ({ setGeneralError }) => {
 
     const { googleSignIn, microsoftSignIn, facebookSignIn } = useContext(AuthContext)
+    const [userEmail, setUserEmail] = useState("");
 
     //get all social media providers
     const googleProvider = new GoogleAuthProvider();
@@ -39,7 +42,6 @@ const SocialLogin = ({ setGeneralError }) => {
             addUser(user)
 
             setGeneralError("");
-            navigate("/");
         } catch (error) {
             setGeneralError(error.message)
         }
@@ -55,7 +57,6 @@ const SocialLogin = ({ setGeneralError }) => {
             addUser(user)
 
             setGeneralError("");
-            navigate("/");
         } catch (error) {
             setGeneralError(error.message)
         }
@@ -71,7 +72,6 @@ const SocialLogin = ({ setGeneralError }) => {
             addUser(user)
 
             setGeneralError("");
-            navigate("/");
 
         } catch (error) {
             setGeneralError(error.message)
@@ -81,11 +81,24 @@ const SocialLogin = ({ setGeneralError }) => {
     //saving the user data to db
     const addUser = async (user) => {
         try {
+            setUserEmail(user.email);
             const res = await axios.post(`${baseURL}/users?email=${user.email}`, user);
+
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            setUserEmail("");
         }
     }
+
+    //get the jwt token
+    const [token] = useJwtToken(userEmail);
+    const cookies = new Cookies();
+
+    if (token) {
+        cookies.set("accessToken", token, { path: "/" })
+        navigate("/");
+    }
+
 
     return (
         <div className='d-flex justify-content-center gap-3'>
