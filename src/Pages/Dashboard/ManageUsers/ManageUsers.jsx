@@ -1,24 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { FaTrash } from 'react-icons/fa'
 
 import "./ManageUsers.css"
 import axios from 'axios'
 import { baseURL } from '../../../assets/baseUrl'
+import Cookies from 'universal-cookie'
+import { AuthContext } from '../../../Contexts/AuthProvider'
+import { useNavigate } from 'react-router-dom'
 
 
 const ManageUsers = () => {
+    const { logOut } = useContext(AuthContext);
     const [users, setUsers] = useState([]);
     const [refetch, setRefech] = useState(false);
+    const navigate = useNavigate();
+    const cookies = new Cookies();
 
     useEffect(() => {
-        axios(`${baseURL}/users`)
+        axios(`${baseURL}/users`, {
+            headers: {
+                "contente-type": "application/json",
+                Authorization: `Bearer ${cookies.get("accessToken")}`
+            }
+        })
             .then(res => {
                 setUsers(res.data.data);
                 setRefech(false);
             })
             .catch(err => {
                 console.log(err)
+                if (err.response.status) {
+                    logOut();
+                    navigate("/user/login");
+                }
             })
     }, [refetch])
 
