@@ -1,7 +1,8 @@
+import axios from 'axios';
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAddUserMutation } from '../../../app/users/userSlice';
+import { baseURL } from '../../../assets/baseUrl';
 import { AuthContext } from '../../../Contexts/AuthProvider';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import "./Register.css"
@@ -10,7 +11,9 @@ const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { registration, updateUser } = useContext(AuthContext)
     const [generalError, setGeneralError] = useState("");
-    const [addUser] = useAddUserMutation();
+
+
+
     const navigate = useNavigate();
     const handleRegister = async data => {
         // console.log(data)
@@ -24,6 +27,15 @@ const Register = () => {
             navigate("/");
         } catch (error) {
             setGeneralError(error.message)
+        }
+    }
+
+
+    const addUser = async (user) => {
+        try {
+            const res = await axios.post(`${baseURL}/users?email=${user.email}`, user);
+        } catch (error) {
+            console.log(error)
         }
     }
 
