@@ -61,7 +61,7 @@ const ManageUsers = () => {
     //deleting the user
     const handleDelete = async user => {
         try {
-            const res = await axios.delete(`${baseURL}/user/${user._id}`)
+            const res = await axios.delete(`${baseURL}/users/user/${user._id}`)
             setRefech(true);
         } catch (error) {
             console.log(error);

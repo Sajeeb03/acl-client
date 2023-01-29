@@ -4,15 +4,16 @@ import { Link, Outlet } from 'react-router-dom'
 
 import Loader from '../../../components/Loader/Loader'
 import { AuthContext } from '../../../Contexts/AuthProvider'
+import useAdmin from '../../../Hooks/useAdmin'
 import Header from '../../Shared/Header/Header'
 import "./Layout.css"
 
 const Layout = () => {
     const [showDrawer, setShowDrawer] = useState(false);
     const { loading, user } = useContext(AuthContext);
+    const [isAdmin, adminLoading] = useAdmin(user?.email);
 
-
-    if (loading) {
+    if (loading || adminLoading) {
         return <Loader />
     }
 
@@ -28,6 +29,9 @@ const Layout = () => {
                             <Link to="/user/register"><p>Sign Up</p></Link>
                             {
                                 user?.uid && <Link to="/manage"><p>Manage User</p></Link>
+                            }
+                            {
+                                isAdmin && <Link to="/acl">Access</Link>
                             }
                         </div>
                     </Col>
