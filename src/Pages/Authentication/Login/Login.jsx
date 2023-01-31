@@ -25,7 +25,7 @@ const Login = () => {
     if (token) {
         // console.log(token)
         cookies.set('accessToken', token, { path: "/" })
-        navigate(from, { replace: true })
+        navigate("/")
     }
 
 

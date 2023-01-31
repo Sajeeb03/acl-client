@@ -11,9 +11,11 @@ import "./Layout.css"
 const Layout = () => {
     const [showDrawer, setShowDrawer] = useState(false);
     const { loading, user } = useContext(AuthContext);
+
     const [isAdmin, adminLoading] = useAdmin(user?.email);
 
     if (loading || adminLoading) {
+        console.log('loading here', adminLoading)
         return <Loader />
     }
 

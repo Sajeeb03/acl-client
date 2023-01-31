@@ -10,6 +10,7 @@ const AdminRoute = ({ children }) => {
     const location = useLocation();
 
     if (loading || adminLoading) {
+        console.log("loading")
         return <Loader />
     }
 

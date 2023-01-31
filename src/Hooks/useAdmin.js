@@ -15,6 +15,9 @@ const useAdmin = email => {
                 })
                 .catch(err => console.log(err))
         }
+        else {
+            setAdminLoading(false)
+        }
     }, [email]);
 
     return [isAdmin, adminLoading]

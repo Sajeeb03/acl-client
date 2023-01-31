@@ -10,6 +10,7 @@ import { AuthContext } from '../../../Contexts/AuthProvider'
 import { useNavigate } from 'react-router-dom'
 
 
+
 const ManageUsers = () => {
     const { logOut } = useContext(AuthContext);
     const [users, setUsers] = useState([]);
@@ -30,7 +31,7 @@ const ManageUsers = () => {
             })
             .catch(err => {
                 console.log(err)
-                if (err.response.status) {
+                if (err?.response?.status) {
                     logOut();
                     navigate("/user/login");
                 }
