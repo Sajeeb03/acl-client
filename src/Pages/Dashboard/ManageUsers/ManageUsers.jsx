@@ -116,19 +116,22 @@ const ManageUsers = () => {
             <h5>Manage Users</h5>
 
             {
-                !error && <Table bordered>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th colSpan={2}>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {content}
-                    </tbody>
-                </Table>
+                !error &&
+                <div className='table'>
+                    <Table bordered>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th colSpan={2}>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {content}
+                        </tbody>
+                    </Table>
+                    </div>
             }
 
             {

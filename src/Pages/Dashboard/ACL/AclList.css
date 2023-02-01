@@ -5,3 +5,12 @@
     padding: 20px;
     box-shadow: 3px 3px 10px;
 }
+@media screen and (max-width: 996px) {
+    .access {
+        background-color: white;
+        border-radius: 8px;
+        margin: 20px 6px;
+        padding: 20px;
+        box-shadow: 3px 3px 10px;
+    }
+}

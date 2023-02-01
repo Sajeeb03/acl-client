@@ -21,4 +21,13 @@
     font-weight: 800;
     border-radius: 4px;
 }
-@media screen and (max-width: 996px) {}
+@media screen and (max-width: 996px) {
+    .manage {
+        margin: 20px 6px;
+    }
+
+    .table {
+        width: 800px;
+        overflow-x: scroll;
+    }
+}

@@ -26,7 +26,7 @@ const Layout = () => {
                 <Row className='gap-0 gap-lg-4'>
                     <Col xs="auto" className='p-0'>
                         <div className={`${showDrawer ? 'show' : "hide"} drawer`}>
-                            <Link onClick={() => setShowDrawer(!showDrawer)} to="/"><FaHome /><p>Home</p></Link>
+                            <Link onClick={() => setShowDrawer(!showDrawer)} to="/"><p>Home</p></Link>
                             <Link onClick={() => setShowDrawer(!showDrawer)} to="/user/login"><p>Sign In</p></Link>
                             <Link onClick={() => setShowDrawer(!showDrawer)} to="/user/register"><p>Sign Up</p></Link>
                             {

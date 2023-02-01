@@ -103,10 +103,10 @@ const AclList = () => {
                 </Col>
 
 
-                <Col sm={8}>
+                <Col xs={6} sm={8}>
                     <h6>Permissions</h6>
                     {/* admin operations */}
-                    <div className='d-flex gap-5'>
+                    <div className='d-md-flex gap-5'>
                         <Form.Group className="mb-3" controlId="formBasicCheckboxCreate">
                             <Form.Check
                                 checked={acl?.scope.includes('admin:write')}
@@ -150,7 +150,7 @@ const AclList = () => {
 
                     {/* manager operattios */}
 
-                    <div className='d-flex gap-5'>
+                    <div className='d-md-flex gap-5'>
                         <Form.Group className="mb-3" controlId="formBasicCheckboxPost">
                             <Form.Check
                                 checked={acl?.scope.includes('manager:write')}
