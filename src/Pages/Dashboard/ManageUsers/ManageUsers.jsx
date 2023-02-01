@@ -62,10 +62,17 @@ const ManageUsers = () => {
     //deleting the user
     const handleDelete = async user => {
         try {
-            const res = await axios.delete(`${baseURL}/users/user/${user._id}`)
+            const res = await axios.delete(`${baseURL}/users/user/${user._id}`, {
+                headers: {
+                    "contente-type": "application/json",
+                    Authorization: `Bearer ${cookies.get("accessToken")}`
+                }
+            })
             setRefech(true);
         } catch (error) {
-            console.log(error);
+            if (error) {
+                alert("You are not allowed to delete")
+            }
         }
     }
 
