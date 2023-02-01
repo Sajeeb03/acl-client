@@ -23,8 +23,8 @@ const Layout = () => {
         <div className='layout'>
             <Header>{[showDrawer, setShowDrawer]}</Header>
             <Container>
-                <Row>
-                    <Col sm="auto">
+                <Row className='gap-0 gap-lg-4'>
+                    <Col xs="auto" className='p-0'>
                         <div className={`${showDrawer ? 'show' : "hide"} drawer`}>
                             <Link onClick={() => setShowDrawer(!showDrawer)} to="/"><FaHome /><p>Home</p></Link>
                             <Link onClick={() => setShowDrawer(!showDrawer)} to="/user/login"><p>Sign In</p></Link>
@@ -37,7 +37,7 @@ const Layout = () => {
                             }
                         </div>
                     </Col>
-                    <Col>
+                    <Col className='p-0'>
                         <Outlet />
                     </Col>
                 </Row>

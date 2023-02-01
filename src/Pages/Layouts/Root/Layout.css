@@ -56,5 +56,6 @@
 
     .hide {
         transform: translateX(-500px);
+        transition: 1s ease-out;
     }
 }
