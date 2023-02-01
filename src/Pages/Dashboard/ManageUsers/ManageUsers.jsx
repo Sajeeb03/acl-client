@@ -12,11 +12,11 @@ import { useNavigate } from 'react-router-dom'
 
 
 const ManageUsers = () => {
-    const { logOut } = useContext(AuthContext);
     const [users, setUsers] = useState([]);
     const [refetch, setRefech] = useState(false);
-    const navigate = useNavigate();
     const cookies = new Cookies();
+
+    const [error, setError] = useState("");
 
     useEffect(() => {
         axios(`${baseURL}/users`, {
@@ -28,12 +28,13 @@ const ManageUsers = () => {
             .then(res => {
                 setUsers(res.data.data);
                 setRefech(false);
+                setError("");
             })
             .catch(err => {
-                console.log(err)
+                setError("You do not have access to this page")
                 if (err?.response?.status) {
-                    logOut();
-                    navigate("/user/login");
+                    // logOut();
+                    // navigate("/user/login");
                 }
             })
     }, [refetch])
@@ -42,20 +43,35 @@ const ManageUsers = () => {
     const handleAdminUpdate = async user => {
         const updateData = { role: "admin" }
         try {
-            const res = await axios.put(`${baseURL}/users/${user._id}`, updateData)
+            const res = await axios.put(`${baseURL}/users/${user._id}`, updateData, {
+                headers: {
+                    "contente-type": "application/json",
+                    Authorization: `Bearer ${cookies.get("accessToken")}`
+                }
+            })
             setRefech(true);
         } catch (error) {
-            console.log(error)
+            if (error) {
+                alert("You are not allowed to update")
+            }
         }
     }
 
     const handleManagerUpdate = async user => {
         const updateData = { role: "manager" }
         try {
-            const res = await axios.put(`${baseURL}/users/${user._id}`, updateData)
+            const res = await axios.put(`${baseURL}/users/${user._id}`, updateData, {
+                headers: {
+                    "contente-type": "application/json",
+                    Authorization: `Bearer ${cookies.get("accessToken")}`
+                }
+            })
+
             setRefech(true);
         } catch (error) {
-            console.log(error)
+            if (error) {
+                alert("You are not allowed to update")
+            }
         }
     }
 
@@ -101,19 +117,25 @@ const ManageUsers = () => {
         <div className='manage'>
             <h5>Manage Users</h5>
 
-            <Table bordered>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th colSpan={2}>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {content}
-                </tbody>
-            </Table>
+            {
+                !error && <Table bordered>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th colSpan={2}>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {content}
+                    </tbody>
+                </Table>
+            }
+
+            {
+                error && <h5 className='text-danger text-center'>{error}</h5>
+            }
         </div>
     )
 }
