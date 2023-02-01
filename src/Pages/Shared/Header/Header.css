@@ -1,3 +1,18 @@
-/* .navbar {
-    height: 200px;
-} */
+.navbar {
+    background: blue;
+    height: 50px;
+}
+
+
+.bar-icon {
+    color: white;
+    height: 18px;
+    width: 18px;
+    display: none;
+}
+
+@media screen and (max-width: 996px) {
+    .bar-icon {
+        display: block;
+    }
+}

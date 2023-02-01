@@ -2,12 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { FaTrash } from 'react-icons/fa'
 
-import "./ManageUsers.css"
 import axios from 'axios'
 import { baseURL } from '../../../assets/baseUrl'
 import Cookies from 'universal-cookie'
-import { AuthContext } from '../../../Contexts/AuthProvider'
-import { useNavigate } from 'react-router-dom'
+import "./ManageUsers.css"
 
 
 
