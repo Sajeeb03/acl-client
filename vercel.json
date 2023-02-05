@@ -13,10 +13,14 @@
       }
     },
     {
-      "src": "public/**"
+      "src": "public/**",
+      "use": "@vercel/static-build",
+      "dest": "/"
     },
     {
-      "src": "dist/**"
+      "src": "dist/**",
+      "use": "@vercel/static-build",
+      "dest": "/"
     }
   ],
   "routes": [
