@@ -1,10 +1,29 @@
 {
   "version": 2,
   "builds": [
-    { "src": "package.json", "use": "@vercel/node" },
-    { "src": "public/**/*", "use": "@vercel/static" }
+    {
+      "src": "package.json",
+      "use": "@vercel/npm",
+      "config": {
+        "dependencies": [
+          "vite",
+          "react",
+          "react-dom"
+        ]
+      }
+    },
+    {
+      "src": "public/**",
+      "dest": "/"
+    },
+    {
+      "src": "dist/**",
+      "dest": "/"
+    }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/index.html" }
+    {
+      "handle": "filesystem"
+    }
   ]
 }
