@@ -13,12 +13,10 @@
       }
     },
     {
-      "src": "public/**",
-      "dest": "/"
+      "src": "public/**"
     },
     {
-      "src": "dist/**",
-      "dest": "/"
+      "src": "dist/**"
     }
   ],
   "routes": [
